@@ -3,12 +3,8 @@ import { View, Text, TouchableOpacity } from "react-native"
 import { styles } from "./styles";
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from "../../components/Color";
-import Button from "../../components/Button";
-import EmailIcon from "../../assets/images/login/e-mail.png"
-import FacebookIcon from "../../assets/images/login/facebook-logo-0.png"
-import GoogleIcon from "../../assets/images/login/google-37.png"
-import AppleIcon from "../../assets/images/login/apple-4.png"
 import InputsLogin from "../../components/InputsLogin";
+import ButtonsLogin from "../../components/ButtonsLogin";
 
 export default function Login() {
     const [closeClick, setCloseClick] = useState<boolean>(false)
@@ -39,14 +35,7 @@ export default function Login() {
                     Ligaremos ou enviaremos uma mensagem para confirmar seu número. Tarifa padrão de dados e mensagens poderão ser aplicadas.
                 </Text>
             </View>
-            <View style={{ width: "100%", justifyContent: "center", alignItems: "center", gap: 10 }}>
-                <Button title="Continuar" image={null} />
-                <Text style={{ color: COLORS.strongGrey }}>ou</Text>
-                <Button title="Continuar com email" image={EmailIcon} />
-                <Button title="Continuar com Facebook" image={FacebookIcon} />
-                <Button title="Continuar com Google" image={GoogleIcon} />
-                <Button title="Continuar com Apple" image={AppleIcon} />
-            </View>
+            <ButtonsLogin />
         </View>
     );
 }

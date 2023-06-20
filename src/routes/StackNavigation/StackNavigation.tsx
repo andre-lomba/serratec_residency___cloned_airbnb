@@ -3,10 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from '../../screens/Login';
 import Home from '../../screens/Home';
-import { ClickableProvider } from '../../context/ClickableContext';
-import { StatusBar } from 'expo-status-bar';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export type RootStackParamList = {
     Login: undefined;
@@ -16,13 +14,10 @@ export type RootStackParamList = {
 const StackNavigation = () => {
     return (
         <NavigationContainer>
-            <StatusBar hidden={false} translucent={true} style="dark" />
-            <ClickableProvider>
                 <Stack.Navigator screenOptions={{ headerShown: false }}>
                     <Stack.Screen name='Login' component={Login} />
                     <Stack.Screen name='Home' component={Home} />
                 </Stack.Navigator>
-            </ClickableProvider>
         </NavigationContainer>
     )
 }

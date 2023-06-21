@@ -4,14 +4,15 @@ import { Ionicons, Entypo } from '@expo/vector-icons';
 import { COLORS } from "../Color";
 import { styles } from "./styles";
 import { ClickableContext } from "../../context/ClickableContext";
+import MaskInput from 'react-native-mask-input';
 
 const InputsLogin = () => {
     const { setClickable } = useContext(ClickableContext)
-
     const [phone, setPhone] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [inputFocus, setInputFocus] = useState<boolean>(false)
     const [passwordFocus, setPasswordFocus] = useState<boolean>(false)
+    const mask = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 
     const handlePressInput = () => {
         setPasswordFocus(false);
@@ -25,14 +26,12 @@ const InputsLogin = () => {
 
     const handleChangePhone = (value: string) => {
 
-        if (value.length < 12) {
-            setPhone(value);
-        }
-        if (value.length === 11) {
+        setPhone(value)
+        if (value.length === 15) {
             setInputFocus(false)
             password.length < 3 ? setPasswordFocus(true) : null;
         }
-        if (value.length < 11) {
+        if (value.length < 15) {
             setInputFocus(true);
         }
         if (value.length === 0) {
@@ -45,7 +44,7 @@ const InputsLogin = () => {
     }
 
     useEffect(() => {
-        if (phone.length === 11 && password.length > 3) {
+        if (phone.length === 15 && password.length > 3) {
             setClickable(true);
         } else {
             setClickable(false);
@@ -70,12 +69,16 @@ const InputsLogin = () => {
                         inputFocus || phone.length > 0 ? { fontSize: 12 } : { fontSize: 16 }]}>Número de telefone</Text>
 
                     {inputFocus || phone.length > 0 ?
-                        <TextInput
+                        <MaskInput
                             keyboardType="phone-pad"
-                            onChangeText={handleChangePhone}
+                            onChangeText={(masked) => {
+                                handleChangePhone(masked)
+                            }}
                             value={phone}
                             autoFocus={inputFocus}
-                            onFocus={handlePressInput} />
+                            onFocus={handlePressInput}
+                            mask={mask}
+                        />
                         : null}
                 </View>
                 {inputFocus || phone.length < 11 ? null : <Ionicons name="checkmark-sharp" size={23} color="black" />}
